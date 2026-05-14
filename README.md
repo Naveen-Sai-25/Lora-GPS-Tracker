@@ -460,4 +460,6 @@ Give this repository a ⭐ on GitHub.
 
 # 📜 License
 
-This project is open-source and available under the MIT License.
+This project is licensed under the MIT License.
+
+See the [LICENSE](LICENSE) file for more details.
