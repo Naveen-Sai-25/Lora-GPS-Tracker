@@ -430,69 +430,80 @@ RECEIVER_LNG = 82.xxxxxx
 ```
 
 These coordinates represent the receiver's permanent location and are used for distance calculations and map visualization.
+
 # 📍 Technologies Used
 
-## Embedded Systems
-
+## 🛠️ Embedded Systems
 - Arduino C/C++
 - SPI
 - I2C
 - SoftwareSerial
 
-## RF Communication
-
+## 📡 RF Communication
 - LoRa SX1278
 - 433 MHz ISM Band
 
-## GPS
-
+## 🛰️ GPS
 - TinyGPS++
 - NEO-6M GPS Module
 
-## Backend
-
+## 🖥️ Backend
 - Python 3
 - Flask
 - Threading
 - PySerial
 
-## Frontend
-
+## 🌐 Frontend
 - HTML5
 - CSS3
 - JavaScript
 - Leaflet.js
 
-## Mapping
-
+## 🗺️ Mapping & Navigation
 - OpenStreetMap
 - OSRM Routing API
 - Haversine Formula
-=======
-### Security note
 
-By default, the server binds to `127.0.0.1` (localhost only) so only
-your computer can access the dashboard. If you want to view it from
-another device on the same WiFi (e.g., your phone), set:
+---
+
+# 🔒 Security Note
+
+By default, the Flask server binds to **127.0.0.1 (localhost only)**, meaning only your computer can access the dashboard.
+
+To access the dashboard from another device (such as your phone) on the same Wi-Fi network, start the server with:
+
+### Linux/macOS
 
 ```bash
-# Linux/macOS
 export FLASK_HOST=0.0.0.0
 python server.py
+```
 
-# Windows
+### Windows
+
+```cmd
 set FLASK_HOST=0.0.0.0
 python server.py
 ```
 
-**Warning:** This exposes GPS coordinates and message content to anyone
-on your local network without authentication. Only use this in trusted
-networks.
->>>>>>> 6ff8ed8 (Updated README, images, and added MIT license)
+> **⚠️ Warning:** Running on `0.0.0.0` exposes your GPS coordinates and message data to other devices on the same local network. Only use this option on trusted networks.
 
-### Selecting the serial port
+---
 
-<<<<<<< HEAD
+# 🔌 Selecting the Serial Port
+
+The server automatically scans available serial ports and attempts to connect to the LoRa receiver.
+
+If multiple serial devices are connected, specify the correct port near the top of `server.py`:
+
+```python
+SERIAL_PORT = "COM5"        # Windows
+# SERIAL_PORT = "/dev/ttyUSB0"   # Linux
+# SERIAL_PORT = "/dev/tty.usbserial-XXXX"   # macOS
+```
+
+Replace the port name with the one assigned to your LoRa receiver.
+
 # 📈 Future Improvements
 
 - AES encryption
@@ -508,62 +519,124 @@ networks.
 ---
 # ⚠️ Important Notes
 
-- LoRa range depends on:
-  - antenna quality
-  - terrain
-  - obstacles
-  - spreading factor
+- LoRa communication range depends on:
+  - Antenna quality
+  - Terrain
+  - Obstacles
+  - Spreading Factor (SF)
 
-- The transmitter and receiver communicate completely offline using LoRa RF communication.
+- The transmitter and receiver communicate **completely offline** using LoRa RF communication.
 
-- Internet is NOT required for:
+- **Internet is NOT required** for:
   - LoRa communication
-  - GPS transmission
+  - GPS data transmission
   - OLED receiver display
 
-- Internet is ONLY required at the receiver-side computer for:
-  - OpenStreetMap loading
+- **Internet is ONLY required on the receiver-side computer** for:
+  - Loading OpenStreetMap
   - OSRM road route calculation
-  - Live web dashboard visualization
-  - Viewing the victim/transmitter location on the map
+  - Live Flask web dashboard
+  - Visualizing the transmitter (victim) location on the map
 
-- Even without internet, the receiver can still:
-  - receive GPS coordinates
-  - display latitude and longitude on the OLED
-  - receive emergency/status messages
-  - measure RSSI signal strength
+- Even without an internet connection, the receiver can still:
+  - Receive GPS coordinates
+  - Display latitude and longitude on the OLED
+  - Receive emergency/status messages
+  - Measure RSSI signal strength
 
-- With internet enabled on the receiver side, the dashboard can visualize the live victim/transmitter location on the map interface.
+- With internet enabled on the receiver-side computer, the dashboard provides live map visualization and route tracking.
+
+---
+
+## 🔌 Selecting the Serial Port
+
+The Flask server selects the serial port using the following priority:
+
+### 1. `LORA_PORT` Environment Variable (Recommended)
+
+**Linux/macOS**
+
+```bash
+export LORA_PORT=/dev/ttyUSB0
+python server.py
+```
+
+**Windows**
+
+```cmd
+set LORA_PORT=COM11
+python server.py
+```
+
+### 2. Automatic Detection
+
+If `LORA_PORT` is not specified, the server automatically searches for common USB-to-Serial devices such as:
+
+- Arduino
+- CH340
+- CP210x
+- FTDI
+- USB Serial
+- ttyUSB
+- ttyACM
+
+### 3. No Compatible Device Found
+
+If no matching serial device is detected:
+
+- The server lists all available serial ports.
+- The web dashboard continues running.
+- The dashboard displays **"Waiting for LoRa data..."** until a receiver is connected.
+
+This prevents the application from repeatedly trying to connect to a non-existent port (such as `COM11`).
+
+---
+
 # 🧪 Tested On
 
-| Hardware | Status |
-|---|---|
+| Hardware / Platform | Status |
+|---------------------|--------|
 | Arduino UNO | ✅ |
-| SX1278 433 MHz | ✅ |
-| NEO-6M GPS | ✅ |
-| SSD1306 OLED | ✅ |
-| Windows 10/11 | ✅ |
-=======
-The server picks the port in this order:
+| LoRa SX1278 (433 MHz) | ✅ |
+| NEO-6M GPS Module | ✅ |
+| SSD1306 OLED Display | ✅ |
+| Windows 10 | ✅ |
+| Windows 11 | ✅ |
 
-1. **`LORA_PORT` environment variable** — explicit override:
-   ```bash
-   # Linux/macOS
-   export LORA_PORT=/dev/ttyUSB0
-   # Windows
-   set LORA_PORT=COM11
-   ```
-2. **Auto-detection** by USB descriptor keyword (Arduino, CH340, CP210,
-   FTDI, USB Serial, ttyUSB, ttyACM).
-3. If neither finds a port, the server prints a clear error listing
-   available ports and the dashboard keeps running with
-   "Waiting for LoRa data...". No more silent infinite retries on a
-   non-existent `COM11`.
->>>>>>> 6ff8ed8 (Updated README, images, and added MIT license)
+## 🧪 Run the Tests
 
-## Run the tests
+Install the project dependencies first:
 
-<<<<<<< HEAD
+```bash
+pip install -r requirements.txt
+```
+
+Run all tests:
+
+```bash
+pytest
+```
+
+Run specific test files:
+
+```bash
+pytest tests/test_parser.py
+pytest tests/test_routes.py
+pytest tests/test_integration_serial.py
+```
+
+Run with verbose output:
+
+```bash
+pytest -v
+```
+
+Generate a coverage report (if `pytest-cov` is installed):
+
+```bash
+pytest --cov=. --cov-report=term-missing
+```
+
 # 👨‍💻 Author
 
 ## Challa Naveen Sai
