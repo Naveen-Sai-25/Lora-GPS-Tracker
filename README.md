@@ -133,30 +133,30 @@ straight-line distance, GPS history, packet sequence/drop counters).
 ## Folder hierarchy
 
 ```
+```text
 lora_tracker/
 ├── server.py                    # Flask server + serial reader + parser
 ├── requirements.txt
 ├── README.md
 │
 ├── templates/
-│   └── index.html               # Jinja2 template (extracted from server.py)
+│   └── index.html               # Jinja2 template
 │
 ├── static/
-│   ├── style.css                # extracted CSS
-│   └── app.js                   # extracted dashboard JS (seq/drop tracking)
+│   ├── style.css                # Dashboard CSS
+│   └── app.js                   # Dashboard JavaScript
 │
 ├── arduino/
 │   ├── TX/
-│   │   └── TX.ino               # transmitter sketch — adds sequence number
+│   │   └── TX.ino               # Transmitter sketch
 │   └── RX/
-│       └── RX.ino               # receiver sketch — emits documented format
+│       └── RX.ino               # Receiver sketch
 │
 └── tests/
     ├── __init__.py
-    ├── test_parser.py           # unit tests for is_valid() / parse_packet()
-    ├── test_routes.py           # Flask endpoint tests (OSRM mocked)
-    └── test_integration_serial.py  # serial loopback integration tests
->>>>>>> 6ff8ed8 (Updated README, images, and added MIT license)
+    ├── test_parser.py           # Parser unit tests
+    ├── test_routes.py           # Flask route tests (OSRM mocked)
+    └── test_integration_serial.py  # Serial integration tests
 ```
 
 ## Packet format
