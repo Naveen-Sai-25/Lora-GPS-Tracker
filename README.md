@@ -339,22 +339,42 @@ The dashboard shows:
 
 ---
 
-# 📡 Packet Format
+## 📡 Packet Format
 
-The transmitter sends data in CSV format:
+The system supports both the **new packet format (with sequence numbers)** and the **legacy format (without sequence numbers)**.
+
+### Over LoRa (TX → RX)
 
 ```text
-LATITUDE,LONGITUDE,MESSAGE
-=======
-Over LoRa (TX → RX):
-```
 <seq>,<lat>,<lng>,<message>
 ```
 
-Over USB serial (RX → Python server):
+Example:
+
+```text
+42,17.385000,78.486700,Hello Trainee!
 ```
+
+### Over USB Serial (RX → Python Server)
+
+```text
 DATA:<seq>,<lat>,<lng>,<message>,RSSI:<value>
->>>>>>> 6ff8ed8 (Updated README, images, and added MIT license)
+```
+
+Example:
+
+```text
+DATA:42,17.385000,78.486700,Hello Trainee!,RSSI:-87
+```
+
+### Legacy Packet Format
+
+The server also accepts older packets that do not include a sequence number.
+
+Legacy LoRa packet:
+
+```text
+<lat>,<lng>,<message>
 ```
 
 Example:
@@ -362,20 +382,12 @@ Example:
 ```text
 17.087741,82.068771,Hello Trainee!
 ```
-<<<<<<< HEAD
 
-Receiver serial output:
+Legacy receiver serial output:
 
 ```text
 DATA:17.087741,82.068771,Hello,RSSI:-78
-=======
-DATA:42,17.385000,78.486700,Hello Trainee!,RSSI:-87
->>>>>>> 6ff8ed8 (Updated README, images, and added MIT license)
 ```
-
-The server also accepts legacy packets without a sequence number.
-
-<<<<<<< HEAD
 # 📷 Working Flow
 
 ## Step 1
