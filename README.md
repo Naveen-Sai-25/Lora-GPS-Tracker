@@ -159,9 +159,6 @@ lora_tracker/
     └── test_integration_serial.py  # Serial integration tests
 ```
 
-## Packet format
-
-<<<<<<< HEAD
 # 🔌 Circuit Connections
 
 # 📡 Transmitter Connections
