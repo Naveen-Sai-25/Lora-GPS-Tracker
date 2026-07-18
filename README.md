@@ -391,33 +391,45 @@ DATA:17.087741,82.068771,Hello,RSSI:-78
 # 📷 Working Flow
 
 ## Step 1
-GPS module gets live coordinates.
+📍 The GPS module acquires live latitude and longitude coordinates.
 
 ## Step 2
-Arduino transmitter sends coordinates through LoRa.
+📡 The Arduino transmitter packages the GPS data and sends it over the LoRa network.
 
 ## Step 3
-Receiver gets packet and displays it on OLED.
+📥 The LoRa receiver receives the packet and displays the information on the OLED display.
 
 ## Step 4
-Receiver sends data to Python Flask server.
+💻 The receiver forwards the received data to the Python Flask server via USB serial.
 
 ## Step 5
-Dashboard plots location on OpenStreetMap.
-=======
-## Run the server
+🗺️ The Flask dashboard processes the data and displays the transmitter's location on an OpenStreetMap map.
+
+---
+
+# ▶️ Run the Server
 
 ```bash
 pip install -r requirements.txt
 python server.py
-# open http://localhost:5000
 ```
->>>>>>> 6ff8ed8 (Updated README, images, and added MIT license)
 
-Set `RECEIVER_LAT` / `RECEIVER_LNG` near the top of `server.py` to your
-fixed receiver location.
+Open your browser and visit:
 
-<<<<<<< HEAD
+```text
+http://localhost:5000
+```
+
+### Receiver Configuration
+
+Set the receiver's fixed location near the top of `server.py`:
+
+```python
+RECEIVER_LAT = 17.xxxxxx
+RECEIVER_LNG = 82.xxxxxx
+```
+
+These coordinates represent the receiver's permanent location and are used for distance calculations and map visualization.
 # 📍 Technologies Used
 
 ## Embedded Systems
