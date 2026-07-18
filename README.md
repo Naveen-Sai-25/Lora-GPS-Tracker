@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <div align="center">
 
 # 📡 LoRa Long Distance GPS Tracker
